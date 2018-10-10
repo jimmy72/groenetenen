@@ -7,18 +7,25 @@
 	<table>
 		<thead>
 			<tr>
-				<th>Voornaam</th>
-				<th>Familienaam</th>
-				<th>Filiaal</th>
+				<th><a th:href='@{/werknemers?sort=voornaam}'>Voornaam</a></th>
+				<th><a th:href='@{/werknemers?sort=familienaam}'>Familienaam</a></th>
+				<th><a th:href='@{/werknemers?sort=filiaal.naam}'>Filiaal</a></th>
 			</tr>
 		</thead>
 		<tbody>
-			<tr th:each='werknemer:${werknemers}'>
+		
+			<tr th:each='werknemer:${page.content}'>
 				<td th:text='${werknemer.voornaam}'></td>
 				<td th:text='${werknemer.familienaam}'></td>
 				<td th:text='${werknemer.filiaal.naam}'></td>
 			</tr>
 		</tbody>
 	</table>
+	<p class='pagineren'>
+	<span th:each='pageNr:${#numbers.sequence(1,page.totalPages)}'> 
+		<span th:if='${pageNr -1 == page.number}' th:text='${pageNr}'></span> 
+		<a th:if='${pageNr -1 != page.number}' th:text='${pageNr}' th:href='@{/werknemers(page=${pageNr-1},sort=${param.sort})}'></a> 
+	</span>
+</p>
 </body>
 </html>
