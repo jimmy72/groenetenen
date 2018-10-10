@@ -10,6 +10,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedAttributeNode;
+import javax.persistence.NamedEntityGraph;
 import javax.persistence.Table;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotBlank;
@@ -22,8 +24,10 @@ import org.springframework.format.annotation.NumberFormat.Style;
 
 @Entity
 @Table(name = "werknemers")
+@NamedEntityGraph(name = Werknemer.MET_FILIAAL, attributeNodes = @NamedAttributeNode("filiaal") )
 public class Werknemer implements Serializable {
 	private static final long serialVersionUID = 1L;
+	public static final String MET_FILIAAL = "Werknemer.metFiliaal";
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
