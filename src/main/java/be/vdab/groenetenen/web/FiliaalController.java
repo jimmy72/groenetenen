@@ -46,7 +46,7 @@ class FiliaalController {
 	}
 	
 	
-	@GetMapping(value = "{filiaal}") 
+	@GetMapping(value = "{filiaal}") //filiaal is de naam van de var in de thymeleaf file
 	ModelAndView read(@PathVariable Optional<Filiaal> filiaal, RedirectAttributes redirectAttributes) {
 		if (filiaal.isPresent()) {
 			return new ModelAndView(FILIAAL_VIEW).addObject(filiaal.get());
