@@ -9,18 +9,13 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 
 import javax.validation.Constraint;
-import javax.validation.OverridesAttribute;
 import javax.validation.Payload;
 
-import org.hibernate.validator.constraints.Range;
-
+@Target({FIELD, METHOD, ANNOTATION_TYPE })
 @Retention(RUNTIME)
-@Target({ FIELD, METHOD, ANNOTATION_TYPE })
-@Constraint(validatedBy = {})
-@Range(min = 1000, max = 9999)
+@Constraint(validatedBy = PostcodeValidator.class) 
 public @interface Postcode {
-	@OverridesAttribute(constraint = Range.class, name = "message") 
-	String message() default "{be.vdab.groenetenen.constraints.Postcode.message}"; 
+	String message() default "{be.vdab.groenetenen.constraints.Postcode.message}";
 	Class<?>[] groups() default {};
 	Class<? extends Payload>[] payload() default {};
 }
