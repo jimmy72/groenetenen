@@ -62,7 +62,7 @@ public class Filiaal implements Serializable{
 	@OneToMany(mappedBy = "filiaal")
 	private Set<Werknemer> werknemers;
 	
-	protected Filiaal() {}
+	public Filiaal() {}
 	
 	public Filiaal(String naam, boolean hoofdFiliaal, BigDecimal waardeGebouw, 
 			LocalDate inGebruikName, Adres adres, long versie) {
