@@ -17,7 +17,7 @@ import be.vdab.groenetenen.entities.Filiaal;
 import be.vdab.groenetenen.services.FiliaalService;
 
 @Controller
-@RequestMapping(path = "filialen", produces = MediaType.TEXT_HTML_VALUE)
+@RequestMapping(path = "/filialen", produces = MediaType.TEXT_HTML_VALUE)
 class FiliaalController {
 	
 	private static final String VAN_TOT_POSCODE_VIEW = "filialen/vantotpostcode";
@@ -36,7 +36,7 @@ class FiliaalController {
 	}
 	
 	
-	@GetMapping(params = { "van", "tot" })
+	@GetMapping(params = {"van", "tot"})
 	ModelAndView vanTotPostcode(@Valid VanTotPostcodeForm form, BindingResult bindingResult) {
 		if (bindingResult.hasErrors()) {
 			return new ModelAndView(VAN_TOT_POSCODE_VIEW);
@@ -47,7 +47,7 @@ class FiliaalController {
 	}
 	
 	
-	@GetMapping(path = "{id}") //filiaal is de naam van de var in de thymeleaf file vantotpostcode.html
+	@GetMapping(path = "/{id}") //filiaal is de naam van de var in de thymeleaf file vantotpostcode.html
 	ModelAndView read(@PathVariable(name = "id") Optional<Filiaal> filiaal, RedirectAttributes redirectAttributes) {
 		if (filiaal.isPresent()) {
 			System.out.println("gevonden haha");

@@ -32,7 +32,7 @@ class FiliaalRestController {
 		this.filiaalService = filiaalService;
 	}
 	
-	@GetMapping(path = "{id}")
+	@GetMapping(path = "/{id}")
 	Filiaal read(@PathVariable(name = "id") Optional<Filiaal> filiaal) { 
 		if(filiaal.isPresent()) {
 			return filiaal.get();
@@ -46,7 +46,7 @@ class FiliaalRestController {
 	void filiaalNietGevonden() {
 	}
 	
-	@DeleteMapping(path = "{id}")
+	@DeleteMapping(path = "/{id}")
 	void delete(@PathVariable(name = "id") Optional<Filiaal> filiaal) {
 		if(! filiaal.isPresent()) {
 			throw new FiliaalNotFoundException();
@@ -77,7 +77,7 @@ class FiliaalRestController {
 		return fouten.toString();
 	}
 	
-	@PutMapping(path = "{id}")
+	@PutMapping(path = "/{id}")
 	void update(@RequestBody @Valid Filiaal filiaal) {
 		filiaalService.update(filiaal);
 	}
