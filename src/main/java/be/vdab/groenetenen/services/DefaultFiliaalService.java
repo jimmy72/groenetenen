@@ -1,12 +1,14 @@
 package be.vdab.groenetenen.services;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
 import be.vdab.groenetenen.entities.Filiaal;
+import be.vdab.groenetenen.exceptions.FiliaalHeeftNogWerknemersException;
 import be.vdab.groenetenen.repositories.FiliaalRepository;
 
 @Service
@@ -24,4 +26,28 @@ class DefaultFiliaalService implements FiliaalService{
 		return this.filiaalRepository.findByAdresPostcodeBetweenOrderByAdresPostcode(van, tot);
 	}
 
+	@Override
+	@Transactional(readOnly = false, isolation = Isolation.READ_COMMITTED)
+	public void delete(long id) {
+		Optional<Filiaal> optionalFiliaal = this.filiaalRepository.findById(id);
+		if(optionalFiliaal.isPresent()) {
+			if(! optionalFiliaal.get().getWerknemers().isEmpty()) {
+				throw new FiliaalHeeftNogWerknemersException();
+			}
+			this.filiaalRepository.deleteById(optionalFiliaal.get().getId());
+		}
+	}
+
+	@Override
+	@Transactional(readOnly = false, isolation = Isolation.READ_COMMITTED)
+	public void create(Filiaal filiaal) {
+		this.filiaalRepository.save(filiaal);
+	}
+
+	@Override
+	@Transactional(readOnly = false, isolation = Isolation.READ_COMMITTED)
+	public void update(Filiaal filiaal) {
+		this.filiaalRepository.save(filiaal);
+	}
+	
 }
