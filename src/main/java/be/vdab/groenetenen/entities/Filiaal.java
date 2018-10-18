@@ -55,6 +55,10 @@ public class Filiaal implements Serializable{
 	@SafeHtml
 	private String naam;
 	
+	@Valid
+	@Embedded
+	private Adres adres;
+	
 	private boolean hoofdFiliaal;
 	
 	@NumberFormat(style = Style.NUMBER)
@@ -67,9 +71,7 @@ public class Filiaal implements Serializable{
 	@NotNull
 	@XmlJavaTypeAdapter(value = LocalDateAdapter.class)
 	private LocalDate inGebruikName;
-	@Valid
-	@Embedded
-	private Adres adres;
+		
 	@Version
 	private long versie;
 	
