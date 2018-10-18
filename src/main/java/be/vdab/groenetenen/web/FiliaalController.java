@@ -29,7 +29,7 @@ class FiliaalController {
 		this.filiaalService = filiaalService;
 	}
 	
-	@GetMapping(value = "/vantotpostcode")
+	@GetMapping(path = "/vantotpostcode")
 	ModelAndView vanTotPostcode() {
 		return new ModelAndView(VAN_TOT_POSCODE_VIEW)
 				.addObject("vanTotPostcodeForm", new VanTotPostcodeForm());
@@ -47,9 +47,10 @@ class FiliaalController {
 	}
 	
 	
-	@GetMapping(value = "{filiaal}") //filiaal is de naam van de var in de thymeleaf file
-	ModelAndView read(@PathVariable Optional<Filiaal> filiaal, RedirectAttributes redirectAttributes) {
+	@GetMapping(path = "{id}") //filiaal is de naam van de var in de thymeleaf file vantotpostcode.html
+	ModelAndView read(@PathVariable(name = "id") Optional<Filiaal> filiaal, RedirectAttributes redirectAttributes) {
 		if (filiaal.isPresent()) {
+			System.out.println("gevonden haha");
 			return new ModelAndView(FILIAAL_VIEW).addObject(filiaal.get());
 		}
 		redirectAttributes.addAttribute("fout", "Filiaal niet gevonden");
