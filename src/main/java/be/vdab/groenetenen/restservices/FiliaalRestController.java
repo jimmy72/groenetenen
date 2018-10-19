@@ -41,10 +41,10 @@ class FiliaalRestController {
 	}
 	
 	@GetMapping(path = "/{id}")
-	Filiaal read(@PathVariable(name = "id") Optional<Filiaal> filiaal) { 
-	
+	FiliaalResource read(@PathVariable(name = "id") Optional<Filiaal> filiaal) { 
 		if(filiaal.isPresent()) {
-			return filiaal.get();
+			//return filiaal.get();
+			return new FiliaalResource(filiaal.get(), entityLinks);
 		}
 		throw new FiliaalNotFoundException();
 	}
@@ -77,6 +77,7 @@ class FiliaalRestController {
 		Link link = entityLinks.linkToSingleResource(Filiaal.class, filiaal.getId()); 
 		headers.setLocation(URI.create(link.getHref()));
 		return headers;
+		
 	}
 	
 	@ExceptionHandler(MethodArgumentNotValidException.class) 
