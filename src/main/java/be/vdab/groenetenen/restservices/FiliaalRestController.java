@@ -1,9 +1,14 @@
 package be.vdab.groenetenen.restservices;
 
+import java.net.URI;
 import java.util.Optional;
 
 import javax.validation.Valid;
 
+import org.springframework.hateoas.EntityLinks;
+import org.springframework.hateoas.ExposesResourceFor;
+import org.springframework.hateoas.Link;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.messaging.handler.annotation.support.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -24,21 +29,24 @@ import be.vdab.groenetenen.services.FiliaalService;
 
 @RestController
 @RequestMapping("/filialen")
+@ExposesResourceFor(Filiaal.class)
 class FiliaalRestController {
 
 	private final FiliaalService filiaalService;
+	private final EntityLinks entityLinks;
 
-	FiliaalRestController(FiliaalService filiaalService) {
+	FiliaalRestController(FiliaalService filiaalService, EntityLinks entityLinks) {
 		this.filiaalService = filiaalService;
+		this.entityLinks = entityLinks;
 	}
 	
 	@GetMapping(path = "/{id}")
 	Filiaal read(@PathVariable(name = "id") Optional<Filiaal> filiaal) { 
+	
 		if(filiaal.isPresent()) {
 			return filiaal.get();
 		}
 		throw new FiliaalNotFoundException();
-				
 	}
 	
 	@ExceptionHandler(FiliaalNotFoundException.class) 
@@ -62,8 +70,13 @@ class FiliaalRestController {
 	}
 	
 	@PostMapping
-	void create(@RequestBody @Valid Filiaal filiaal) {
+	@ResponseStatus(HttpStatus.CREATED)
+	HttpHeaders create(@RequestBody @Valid Filiaal filiaal) {
 		filiaalService.create(filiaal);
+		HttpHeaders headers = new HttpHeaders();
+		Link link = entityLinks.linkToSingleResource(Filiaal.class, filiaal.getId()); 
+		headers.setLocation(URI.create(link.getHref()));
+		return headers;
 	}
 	
 	@ExceptionHandler(MethodArgumentNotValidException.class) 

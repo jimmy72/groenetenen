@@ -49,5 +49,11 @@ class DefaultFiliaalService implements FiliaalService{
 	public void update(Filiaal filiaal) {
 		this.filiaalRepository.save(filiaal);
 	}
+
+	@Override
+	public Optional<Filiaal> findById(long id) {
+		return this.filiaalRepository.findById(id);
+	}
+	
 	
 }

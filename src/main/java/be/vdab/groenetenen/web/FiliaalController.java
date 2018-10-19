@@ -46,14 +46,25 @@ class FiliaalController {
 						form.getVan(), form.getTot()));
 	}
 	
+	//3.1.1 Automatische String naar Entity converters
+//	@GetMapping(path = "/{id}") //filiaal is de naam van de var in de thymeleaf file vantotpostcode.html
+//	ModelAndView read(@PathVariable(name = "id") Optional<Filiaal> filiaal, RedirectAttributes redirectAttributes) {
+//		if (filiaal.isPresent()) {
+//			return new ModelAndView(FILIAAL_VIEW).addObject(filiaal.get());
+//		}
+//		redirectAttributes.addAttribute("fout", "Filiaal niet gevonden");
+//		return new ModelAndView(REDIRECT_FILIAAL_NIET_GEVONDEN);
+//	}
 	
+	//Manuele read method die 
 	@GetMapping(path = "/{id}") //filiaal is de naam van de var in de thymeleaf file vantotpostcode.html
-	ModelAndView read(@PathVariable(name = "id") Optional<Filiaal> filiaal, RedirectAttributes redirectAttributes) {
+	ModelAndView read(@PathVariable(name = "id") long filiaalId, RedirectAttributes redirectAttributes) {
+		Optional<Filiaal> filiaal = this.filiaalService.findById(filiaalId);
 		if (filiaal.isPresent()) {
-			System.out.println("gevonden haha");
 			return new ModelAndView(FILIAAL_VIEW).addObject(filiaal.get());
 		}
 		redirectAttributes.addAttribute("fout", "Filiaal niet gevonden");
 		return new ModelAndView(REDIRECT_FILIAAL_NIET_GEVONDEN);
 	}
+	
 }
