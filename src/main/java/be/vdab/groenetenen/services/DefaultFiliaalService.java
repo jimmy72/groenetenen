@@ -54,6 +54,11 @@ class DefaultFiliaalService implements FiliaalService{
 	public Optional<Filiaal> findById(long id) {
 		return this.filiaalRepository.findById(id);
 	}
+
+	@Override
+	public List<Filiaal> findAll() {
+		return this.filiaalRepository.findAll();
+	}
 	
 	
 }

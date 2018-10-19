@@ -40,6 +40,7 @@ class FiliaalRestController {
 		this.entityLinks = entityLinks;
 	}
 	
+	//een filiaal opvragen
 	@GetMapping(path = "/{id}")
 	FiliaalResource read(@PathVariable(name = "id") Optional<Filiaal> filiaal) { 
 		if(filiaal.isPresent()) {
@@ -54,6 +55,13 @@ class FiliaalRestController {
 	void filiaalNietGevonden() {
 	}
 	
+	//Alle filialen opvragen
+	@GetMapping
+	FilialenResource findAll() {
+		return new FilialenResource(this.filiaalService.findAll(), entityLinks);
+	}
+	
+	//een filiaal verwijderen
 	@DeleteMapping(path = "/{id}")
 	void delete(@PathVariable(name = "id") Optional<Filiaal> filiaal) {
 		if(! filiaal.isPresent()) {
@@ -69,6 +77,7 @@ class FiliaalRestController {
 		return "Filiaal heeft nog werknemers";
 	}
 	
+	//een filiaal toevoegen
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
 	HttpHeaders create(@RequestBody @Valid Filiaal filiaal) {
@@ -91,6 +100,7 @@ class FiliaalRestController {
 		return fouten.toString();
 	}
 	
+	//een filiaal wijzigen
 	@PutMapping(path = "/{id}")
 	void update(@RequestBody @Valid Filiaal filiaal) {
 		filiaalService.update(filiaal);

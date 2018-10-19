@@ -11,4 +11,5 @@ public interface FiliaalService {
 	public abstract void create(Filiaal filiaal);
 	public abstract void update(Filiaal filiaal);
 	public abstract Optional<Filiaal> findById(long id);
+	public abstract List<Filiaal> findAll();
 }
