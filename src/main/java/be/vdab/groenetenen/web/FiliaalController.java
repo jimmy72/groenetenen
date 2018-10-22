@@ -23,6 +23,7 @@ class FiliaalController {
 	private static final String VAN_TOT_POSCODE_VIEW = "filialen/vantotpostcode";
 	private static final String FILIAAL_VIEW = "filialen/filiaal";
 	private static final String REDIRECT_FILIAAL_NIET_GEVONDEN = "redirect:/";
+	private static final String PER_ID_VIEW = "filialen/perid";
 	private final FiliaalService filiaalService;
 	
 	FiliaalController(FiliaalService filiaalService){
@@ -65,6 +66,11 @@ class FiliaalController {
 		}
 		redirectAttributes.addAttribute("fout", "Filiaal niet gevonden");
 		return new ModelAndView(REDIRECT_FILIAAL_NIET_GEVONDEN);
+	}
+	
+	@GetMapping(path = "/perid")
+	String findById() {
+		return PER_ID_VIEW;
 	}
 	
 }
