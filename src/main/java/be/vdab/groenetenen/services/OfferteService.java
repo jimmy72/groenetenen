@@ -8,5 +8,4 @@ public interface OfferteService {
 	public abstract void create(Offerte offerte, String offertesURL);
 	public abstract Optional<Offerte> read(long id);
 	public abstract void aantalOffertesMail();
-	
 }

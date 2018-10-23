@@ -37,6 +37,7 @@ class DefaultOfferteService implements OfferteService {
 	@Transactional(readOnly = false, isolation = Isolation.READ_COMMITTED)
 	public void create(Offerte offerte, String offertesURL) {
 		offerteRepository.save(offerte);
+		mailSender.nieuweOfferte(offerte, offertesURL);
 		OfferteEnOffertesURL offerteEnOffertesURL = new OfferteEnOffertesURL(offerte, offertesURL); 
 		jmsTemplate.convertAndSend(nieuweOfferteQueue, offerteEnOffertesURL);
 	}

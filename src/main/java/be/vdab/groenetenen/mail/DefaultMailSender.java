@@ -32,17 +32,20 @@ class DefaultMailSender implements MailSender {
 
 	@Override
 	@Async
-	public void nieuweOfferte(Offerte offerte) {
+	public void nieuweOfferte(Offerte offerte, String offertesURL) {
 		try {
-			SimpleMailMessage message = new SimpleMailMessage();
-			message.setTo(offerte.getEmailAdres());
-			message.setSubject("Nieuwe offerte");
-			message.setText("Uw offerte heeft het nummer " + offerte.getId());
+			MimeMessage message = sender.createMimeMessage(); 
+			MimeMessageHelper helper = new MimeMessageHelper(message); 
+			helper.setTo(offerte.getEmailAdres());
+			helper.setSubject("Nieuwe offerte");
+			String offerteURL = offertesURL + offerte.getId(); 
+			helper.setText("Uw offerte heeft het nummer <strong>" + offerte.getId() + 
+					"</strong>. Je vindt de offerte <a href='" + offerteURL + "'>hier</a>.",true); 
 			sender.send(message);
-		} catch (MailException ex) {
-			LOGGER.error("Kan mail nieuwe offerte niet versturen", ex);
-			throw new KanMailNietZendenException("Kan mail nieuwe offerte niet versturen");
-		}
+			} catch (MessagingException | MailException ex) {
+				LOGGER.error("Kan mail nieuwe offerte niet versturen", ex);
+				throw new KanMailNietZendenException("Kan mail nieuwe offerte niet versturen");
+			}
 		
 	}
 
