@@ -39,13 +39,12 @@ class DefaultMailSender implements MailSender {
 			message.setSubject("Nieuwe offerte");
 			message.setText("Uw offerte heeft het nummer " + offerte.getId());
 			sender.send(message);
-			} catch (MailException ex) {
-				LOGGER.error("Kan mail nieuwe offerte niet versturen", ex);
-				throw new KanMailNietZendenException("Kan mail nieuwe offerte niet versturen");
-			}
+		} catch (MailException ex) {
+			LOGGER.error("Kan mail nieuwe offerte niet versturen", ex);
+			throw new KanMailNietZendenException("Kan mail nieuwe offerte niet versturen");
+		}
 		
 	}
-
 
 	@Override
 	public void aantalOffertesMail(long aantal) {
@@ -56,10 +55,10 @@ class DefaultMailSender implements MailSender {
 			helper.setSubject("Aantal offertes");
 			helper.setText("Aantal offertes:<strong>" + aantal + "</strong>", true);
 			sender.send(message);
-			} catch (MessagingException | MailException ex) {
+		} catch (MessagingException | MailException ex) {
 			LOGGER.error("Kan mail aantal offertes niet versturen", ex);
-				throw new KanMailNietZendenException("Kan mail aantal offertes niet versturen");
-			}
+			throw new KanMailNietZendenException("Kan mail aantal offertes niet versturen");
+		}
 		
 	}
 
