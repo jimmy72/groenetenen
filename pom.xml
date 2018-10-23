@@ -80,6 +80,7 @@
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-oxm</artifactId>
 		</dependency>
+		
 	</dependencies>
 
 	<build>

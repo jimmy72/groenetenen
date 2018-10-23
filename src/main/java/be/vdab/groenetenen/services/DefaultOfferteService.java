@@ -37,7 +37,7 @@ class DefaultOfferteService implements OfferteService {
 	@Transactional(readOnly = false, isolation = Isolation.READ_COMMITTED)
 	public void create(Offerte offerte, String offertesURL) {
 		offerteRepository.save(offerte);
-		mailSender.nieuweOfferte(offerte, offertesURL);
+		//mailSender.nieuweOfferte(offerte, offertesURL);
 		OfferteEnOffertesURL offerteEnOffertesURL = new OfferteEnOffertesURL(offerte, offertesURL); 
 		jmsTemplate.convertAndSend(nieuweOfferteQueue, offerteEnOffertesURL);
 	}
@@ -48,11 +48,10 @@ class DefaultOfferteService implements OfferteService {
 	}
 
 	@Override
-	@Scheduled(/*cron = " 0 0/1 * 1/1 * ? * "*/ fixedRate=60000)
-	// test = om de minuut
+	@Scheduled(/*cron = " 0 0/1 * 1/1 * ? * "*/ fixedRate=3600000)
+	// test = om het uur
 	public void aantalOffertesMail() {
 		mailSender.aantalOffertesMail(offerteRepository.count());
-		
 	}
 
 }
