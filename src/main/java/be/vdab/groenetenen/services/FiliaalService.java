@@ -12,4 +12,5 @@ public interface FiliaalService {
 	public abstract void update(Filiaal filiaal);
 	public abstract Optional<Filiaal> findById(long id);
 	public abstract List<Filiaal> findAll();
+	public abstract void afschrijven(long id);
 }

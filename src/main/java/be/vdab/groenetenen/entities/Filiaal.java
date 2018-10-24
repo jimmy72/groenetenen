@@ -159,4 +159,8 @@ public class Filiaal implements Serializable{
 	public void setVersie(long versie) {
 		this.versie = versie;
 	}
+	
+	public void afschrijven() {
+		this.waardeGebouw = BigDecimal.ZERO;
+	}
 }

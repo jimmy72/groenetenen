@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -24,6 +25,7 @@ class FiliaalController {
 	private static final String FILIAAL_VIEW = "filialen/filiaal";
 	private static final String REDIRECT_FILIAAL_NIET_GEVONDEN = "redirect:/";
 	private static final String PER_ID_VIEW = "filialen/perid";
+	private static final String REDIRECT_NA_AFSCHRIJVEN = "redirect:/filialen/{id}";
 	private final FiliaalService filiaalService;
 	
 	FiliaalController(FiliaalService filiaalService){
@@ -62,7 +64,7 @@ class FiliaalController {
 	ModelAndView read(@PathVariable(name = "id") long filiaalId, RedirectAttributes redirectAttributes) {
 		Optional<Filiaal> filiaal = this.filiaalService.findById(filiaalId);
 		if (filiaal.isPresent()) {
-			return new ModelAndView(FILIAAL_VIEW).addObject(filiaal.get());
+			return new ModelAndView(FILIAAL_VIEW).addObject("filiaal", filiaal.get());
 		}
 		redirectAttributes.addAttribute("fout", "Filiaal niet gevonden");
 		return new ModelAndView(REDIRECT_FILIAAL_NIET_GEVONDEN);
@@ -71,6 +73,13 @@ class FiliaalController {
 	@GetMapping(path = "/perid")
 	String findById() {
 		return PER_ID_VIEW;
+	}
+	
+	@PostMapping(path = "/{id}/afschrijven")
+	String afschrijven(@PathVariable(name="id") long id, RedirectAttributes redirectAttributes ) {
+		this.filiaalService.afschrijven(id);
+		redirectAttributes.addAttribute("id", id);
+		return REDIRECT_NA_AFSCHRIJVEN;
 	}
 	
 }

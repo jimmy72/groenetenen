@@ -31,7 +31,7 @@ class DefaultMailSender implements MailSender {
 
 
 	@Override
-	@Async
+	//@Async
 	public void nieuweOfferte(Offerte offerte, String offertesURL) {
 		try {
 			MimeMessage message = sender.createMimeMessage(); 
