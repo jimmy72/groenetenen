@@ -1,11 +1,14 @@
 package be.vdab.groenetenen.security;
 
+import javax.sql.DataSource;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.jdbc.JdbcDaoImpl;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 
 @EnableWebSecurity
@@ -14,12 +17,20 @@ class SecurityConfig extends WebSecurityConfigurerAdapter{
 	private static final String HELPDESKMEDEWERKER = "helpdeskmedewerker";
 	private static final String MAGAZIJNIER = "magazijnier";
 	
+//	@Bean
+//	InMemoryUserDetailsManager inMemoryUserDetailsManager() { 
+//		return new InMemoryUserDetailsManager(
+//			User.builder().username("joe").password("{noop}theboss").authorities(MANAGER).build(), 
+//			User.builder().username("averell").password("{noop}hungry").authorities(HELPDESKMEDEWERKER, MAGAZIJNIER).build());
+//	}
+	
 	@Bean
-	InMemoryUserDetailsManager inMemoryUserDetailsManager() { 
-		return new InMemoryUserDetailsManager(
-			User.builder().username("joe").password("{noop}theboss").authorities(MANAGER).build(), 
-			User.builder().username("averell").password("{noop}hungry").authorities(HELPDESKMEDEWERKER, MAGAZIJNIER).build());
+	JdbcDaoImpl jdbcDaoImpl(DataSource dataSource) { 
+		JdbcDaoImpl impl = new JdbcDaoImpl();
+		impl.setDataSource(dataSource);
+		return impl;
 	}
+	
 	
 	@Override
 	public void configure(WebSecurity web) throws Exception { 
