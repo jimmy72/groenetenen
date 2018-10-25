@@ -16,6 +16,16 @@ class SecurityConfig extends WebSecurityConfigurerAdapter{
 	private static final String MANAGER = "manager";
 	private static final String HELPDESKMEDEWERKER = "helpdeskmedewerker";
 	private static final String MAGAZIJNIER = "magazijnier";
+	private static final String USERS_BY_USERNAME =
+			"select naam as username, paswoord as password, actief as enabled" +
+			" from gebruikers where naam = ?";
+	private static final String AUTHORITIES_BY_USERNAME =
+			"select gebruikers.naam as username, rollen.naam as authorities" +
+			" from gebruikers inner join gebruikersrollen" +
+			" on gebruikers.id = gebruikersrollen.gebruikerid" +
+			" inner join rollen" +
+			" on rollen.id = gebruikersrollen.rolid" +
+			" where gebruikers.naam= ?";
 	
 //	@Bean
 //	InMemoryUserDetailsManager inMemoryUserDetailsManager() { 
@@ -28,6 +38,8 @@ class SecurityConfig extends WebSecurityConfigurerAdapter{
 	JdbcDaoImpl jdbcDaoImpl(DataSource dataSource) { 
 		JdbcDaoImpl impl = new JdbcDaoImpl();
 		impl.setDataSource(dataSource);
+		impl.setUsersByUsernameQuery(USERS_BY_USERNAME);
+		impl.setAuthoritiesByUsernameQuery(AUTHORITIES_BY_USERNAME);
 		return impl;
 	}
 	
