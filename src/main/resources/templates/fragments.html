@@ -30,6 +30,12 @@
 			</li>
 			<li><a th:href='@{?locale=nl_BE}'>Nederlands</a></li> 
 			<li><a th:href='@{?locale=fr_BE}'>Français</a></li>
+			<li><a th:href='@{/login}'>Aanmelden</a></li>
+			<li>
+				<form method='post' th:action='@{/logout}' id='logoutform'>
+					<input type='submit' value='Afmelden' id='logoutbutton'>
+				</form>
+			</li>
 		</ul>
 	</nav>
 </body>
